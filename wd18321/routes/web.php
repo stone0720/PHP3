@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KhachHangController;
 use App\Http\Controllers\KhanhController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\TinController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +20,22 @@ Route::get('/test', function(){
 });
 
 Route::get('/list-user', [UserController::class, 'showUser']);
+
+// Route::get('/list-user', function() {
+//     $users = [
+//         [
+//             'id' => '1',
+//             'name' => 'khanh'
+//         ],
+//         [
+//             'id' => '2',
+//             'name' => 'hai'
+//         ]
+//         ];
+//     return view('list-user')->with(
+//         ['abc' => $users]
+//     );
+// });
 
 // Slug: là một thành phần của đường dẫn
 // http://127.0.0.1:8000/get-user/1
@@ -36,3 +57,28 @@ Route::get('/ct/{id}', [TinController::class, 'lay1Tin']);
 
 // Bài 3
 Route::get('/thong-tin-SV', [KhanhController::class, 'showKhanh']);
+
+// http://127.0.0.1:8000/users/list-users
+Route::group(['prefix' => 'users', 'as' => 'users.'], function(){
+    Route::get('list-users', [UserController::class, 'listUsers'])->name('list-users');
+    Route::get('add-users', [UserController::class, 'addUsers'])->name('addUsers'); 
+    // bình thường route không được trùng tên nhau nhưng do method khác nhau nên không có lỗi
+    Route::post('add-users', [UserController::class, 'addPostUsers'])->name('addPostUsers');
+    Route::get('del-users/{id}', [UserController::class, 'delUsers'])->name('delUsers');
+    Route::get('detail-users/{id}', [UserController::class, 'detailUsers'])->name('detailUsers');
+    Route::post('update-users/{id}', [UserController::class, 'updatePostUsers'])->name('updatePostUsers');
+
+});
+
+Route::group(['prefix' => 'product', 'as' => 'product.'], function(){
+    Route::get('list-product', [ProductController::class, 'index'])->name('index');
+    Route::get('add-product', [ProductController::class, 'addProduct'])->name('addProduct'); 
+    Route::post('add-product', [ProductController::class, 'addPostProduct'])->name('addPostProduct');
+    Route::get('del-product/{id}', [ProductController::class, 'delProduct'])->name('delProduct');
+    Route::get('detail-product/{id}', [ProductController::class, 'detailProduct'])->name('detailProduct');
+    Route::post('update-product/{id}', [ProductController::class, 'updatePostProduct'])->name('updatePostProduct');
+
+});
+
+
+
