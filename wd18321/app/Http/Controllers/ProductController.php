@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
     public function index(Request $request){
-        if(isset($request) && ($request) != ""){
+        if(isset($request->key) && ($request->key) != ""){
+            $check = true;
             $key = $request->key;
             $title = 'Tìm kiếm: '.$key;
             $listProduct = DB::table('product')
@@ -19,15 +20,16 @@ class ProductController extends Controller
             ->orWhere('category.name','like', '%' . $key .'%')
             ->orderBy('view', 'desc')
             ->get();
-            return view('products.index', compact('title', 'listProduct'));
+            return view('admins.products.index', compact('title', 'listProduct', 'check'));
         }else{
+            $check = false;
             $title = 'Danh sách sản phẩm';
             $listProduct = DB::table('product')
             ->join('category', 'product.category_id', '=', 'category.id')
             ->select('product.id', 'product.name', 'product.price', 'product.view', 'category.name as ct_name')
             ->orderBy('view', 'desc')
             ->get();
-            return view('products.index', compact('title', 'listProduct'));
+            return view('admins.products.index', compact('title', 'listProduct', 'check'));
         }
         
     }
@@ -35,7 +37,7 @@ class ProductController extends Controller
     public function addProduct(){
         $title = 'Thêm mới sản phẩm';
         $category = DB::table('category')->get();
-        return view('products.add', compact('title', 'category'));
+        return view('admins.products.add', compact('title', 'category'));
     }
 
      public function addPostProduct(Request $request){
@@ -61,7 +63,7 @@ class ProductController extends Controller
         $title = 'Update Product';
         $category = DB::table('category')->get();
         $product = DB::table('product')->where('id', $id)->first();
-        return view('products.update', compact('title', 'category', 'product'));
+        return view('admins.products.update', compact('title', 'category', 'product'));
     }
 
     public function updatePostProduct(Request $request, $id){

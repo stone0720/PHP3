@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class SanPham extends Model
@@ -24,9 +25,23 @@ class SanPham extends Model
         return $listSanPham;
     }
 
+    public function addSanPham($data){
+         DB::table('san_phams')->insert($data);
+    }
+
+    public function updateSanPham($data, $id){
+         DB::table('san_phams')->where('id', $id)->update($data);
+    }
+
+    public function deleteSanPham($id){
+        DB::table('san_phams')->where('id', $id)->delete();
+   }
+
     // Cách 3: Sử dụng Eloquent
+    use SoftDeletes; // Xóa mềm bằng eloquent 
     protected $table = 'san_phams';
     protected $fillable = [
+        'hinh_anh',
         'ma_san_pham',
         'ten_san_pham',
         'gia',

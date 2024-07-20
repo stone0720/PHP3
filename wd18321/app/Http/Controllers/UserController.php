@@ -165,4 +165,5 @@ class UserController extends Controller
         DB::table("users")->where('id', $id)->update($data);
         return redirect()->route('users.list-users');
     }
+
 }

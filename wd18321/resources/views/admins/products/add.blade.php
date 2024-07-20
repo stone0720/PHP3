@@ -1,23 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('admins.layouts.default')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ $title }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        th,
-        td {
-            text-align: center;
-            vertical-align: middle;
-        }
-    </style>
-</head>
+@section('title')
+    {{ $title }}
+@endsection
 
-<body class="bg-light">
-    <div class="container mt-5 p-4 bg-white shadow-sm rounded">
+@section('css')
+   
+@endsection
+
+@section('content')
+    <div class="p-4" style="min-height: 800px;">
         <h1 class="text-center mb-4">{{ $title }}</h1>
         <form action="{{ route('product.addPostProduct') }}" method="POST">
             {{-- @csrf: dùng để xác minh form này không phải từ nơi khác, tránh bị tấn công --}}
@@ -48,7 +40,9 @@
             <a href="http://127.0.0.1:8000/product/list-product" class="form-control btn btn btn-success">Danh sách</a>
         </form>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+@endsection
 
-</html>
+@section('js')
+    
+@endsection
+
